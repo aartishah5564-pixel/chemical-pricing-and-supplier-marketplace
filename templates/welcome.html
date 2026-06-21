@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ChemTrade | Marketplace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- <nav class="navbar">  
+        <div class="logo" style="text-align: center; font-size:xx-large;">ChemTrade</div>
+        <div class="nav-links">
+            <a href="/login">Login</a>&nbsp;&nbsp;
+            <a href="/dashboard">Dashboard</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/admin" >Admin Panel</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <a href="{{ url_for('buyer') }}">Buyer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ url_for('supplier') }}">Supplier</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/orders">Order History</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/reviews">Reviews</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/notifications">Notifications</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/support">Help & Support</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            
+        </div>
+    </nav> -->
+    <!--A navigation bar is a group of links usually placed:
+At the top of a webpage
+Sometimes on the side of a webpage
+It acts like a road map for the website.  -->
+
+
+    <div class="navbar">
+        <div class="left">
+            <span class="menu-btn" onclick="openMenu()">☰</span>
+            <span class="logo" style="font-size: larger;"> ChemTrade</span>
+        </div>
+    </div>
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">❌</span>
+        <!-- <button onclick="toggleTheme()"></button> -->
+        <button onClick="location.href='/'">📺 Home</button>
+        <button onClick="location.href='/login'">login</button>
+        <button onClick="location.href='/dashboard'">Dashboard</button>
+        <button onClick="location.href='/admin'">Admin</button>
+        <button onClick="location.href='/buyer'">Buyer</button>
+        <button onClick="location.href='/supplier'">Supplier</button>
+        <button onClick="location.href='/orders'">Order History</button>
+        <button onClick="location.href='/reviews'">Review</button>
+        <button onClick="location.href='/support'">Help & Support</button>
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="overlay" onclick="closeMenu()"></div>
+
+    <!-- hero is used for titles -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Global Chemical Pricing & Supplier Network</h1>
+            <p>Connect with verified suppliers and get real-time pricing for industrial chemicals.</p>
+            <div class="hero-buttons">
+                <a href="/login" class="btn btn-primary">Get Started</a>
+                <a href="/buyer" class="btn btn-primary">Browse Market</a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- section is html tag and features is for styling -->
+    <section class="features">
+        <div class="feature-card">
+            <h3>Suppliers</h3>
+            <p>List your inventory and reach buyers globally.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Buyers</h3>
+            <p>Compare prices and secure bulk orders instantly.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Admin</h3>
+            <p>Full control over users and marketplace safety.</p>
+        </div>
+    </section>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        function deleteTransaction(id) {
+            if (confirm("Delete this transaction?")) {
+                fetch(`/delete-transaction/${id}`, {
+                    method: "POST"
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        }
+        function openMenu() {
+            sidebar.classList.add("active");
+            overlay.style.display = "block";
+        }
+
+        function closeMenu() {
+            sidebar.classList.remove("active");
+            overlay.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

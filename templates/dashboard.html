@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <span>Chemical Market | Dashboard</span>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="container">
+        <h1>Welcome, {{ current_user.username }}!</h1>
+        <p>You are logged in as a <strong>{{ current_user.role }}</strong>.</p>
+        <hr>
+        <div class="card">
+            <h3>Quick Actions</h3>
+            {% if current_user.role == 'admin' %}
+                <a href="/admin" class="btn">Manage System</a>
+            {% elif current_user.role == 'supplier' %}
+                <a href="/supplier" class="btn">Manage My Chemicals</a>
+            {% else %}
+                <a href="/buyer" class="btn">Browse Marketplace</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    <h2 class="page-title">Order History</h2>
+
+    <div class="card">
+        <table class="table">
+            <tr>
+                <th>Order ID</th>
+                <th>Chemical</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Invoice</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.product }}</td>
+                <td>{{ order.qty }}</td>
+                <td>{{ order.price }} ₹</td>
+                <td><span class="badge badge-paid">{{ order.status }}</span></td>
+                <td><a href="/invoice/{{ order.id }}" class="invoice-btn">Download</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

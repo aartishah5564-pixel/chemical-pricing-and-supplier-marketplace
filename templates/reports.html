@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+<h2>Analytics Dashboard</h2>
+
+<ul>
+<li>Total Orders: {{ analytics.orders }}</li>
+<li>Total Buyers: {{ analytics.buyers }}</li>
+<li>Monthly Revenue: {{ analytics.revenue }}</li>
+<li>Top Product: {{ analytics.top }}</li>
+<li>Pending Shipments: {{ analytics.pending }}</li>
+</ul>
+
+<button class="btn-secondary">Export CSV</button>
+<button class="btn-secondary">Export PDF</button>
+</div>
+{% endblock %}

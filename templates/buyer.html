@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace | ChemTrade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="buyer-body">
+    <nav class="buyer-nav">
+        <div class="nav-container">
+            <div class="nav-spacer"></div>
+            <span class="logo">ChemTrade <span>Market</span></span>
+
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <div class="buyer-container">
+        <header class="market-header">
+            <h1 style="color: whitesmoke;">Chemical Marketplace</h1>
+            <h>Welcome Buyer</h>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search for chemicals (e.g. Ethanol, Acid)...">
+                <button class="btn-search">Search</button>
+            </div>
+        </header>
+
+        <div class="product-grid">
+            {% for chem in chemicals %}
+            <div class="product-card">
+                <div class="card-badge">Verified</div>
+                <div class="product-info">
+                    <span class="category">Industrial Chemical</span>
+                    <h3>{{ chem['name'] }}</h3>
+                    <p class="supplier-name">Supplier: <strong>{{ chem['supplier'] }}</strong></p>
+                    <div class="price-row">
+                        <span class="price"><small>INR{{ chem['price'] }} /kg</small></span>
+                    </div>
+                    <button class="btn-buy" onclick="alert('Order request sent to {{ chem.supplier}}!')"> Order Request</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                let name = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = name.includes(filter) ? "block" : "none";
+            });
+        });
+    </script>

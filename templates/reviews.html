@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reviews</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    <h2 class="page-title">Reviews & Ratings</h2>
+
+    {% for r in reviews %}
+    <div class="card">
+        <div class="rating-stars">⭐⭐⭐⭐✰</div>
+        <div class="review-user">{{ r.user }}</div>
+        <div class="review-date">{{ r.date }}</div>
+        <p>{{ r.comment }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

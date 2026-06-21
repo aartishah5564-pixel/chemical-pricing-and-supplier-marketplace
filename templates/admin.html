@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Command Center | ChemTrade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="admin-body">
+
+   
+    <main class="admin-content">
+         <div class="navbar">
+        <div class="left">
+            <span class="menu-btn" onclick="openMenu()">☰</span>
+            <!-- <span class="logo"> ChemTrad</span> -->
+        </div>
+    </div>
+    
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">❌</span>
+        <button onClick="location.href='/'">📺 Home</button>
+        <button onClick="location.href='/dashboard'">Dashboard</button>
+        <button onClick="location.href='/logout'">logout</button>
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="overlay" onclick="closeMenu()"></div>
+        <header class="content-header">
+            <h1>System Overview</h1>
+            <p>Welcome back, Administrator. Here is what's happening today.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <p class="stat-number">{{ users|length }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Listings</h3>
+                <p class="stat-number">{{ chemicals|length }}</p>
+            </div>
+            <div class="stat-card green">
+                <h3>System Status</h3>
+                <p class="stat-number">Online</p>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2>User Management</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>#{{ user['id'] }}</td>
+                        <td><strong>{{ user['username'] }}</strong></td>
+                        <td><span class="badge {{ user['role'] }}">{{ user['role'] }}</span></td>
+                        <td><span class="status-dot"></span> Active</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-card">
+            <h2>Global Chemical Inventory</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chemical</th>
+                        <th>Price</th>
+                        <th>Supplier</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chem in chemicals %}
+                    <tr>
+                        <td>{{ chem['name'] }}</td>
+                        <td>${{ chem['price'] }} /kg</td>
+                        <td>{{ chem['supplier'] }}</td>
+                        <td><button class="btn-delete">Remove</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        function deleteTransaction(id) {
+            if (confirm("Delete this transaction?")) {
+                fetch(`/delete-transaction/${id}`, {
+                    method: "POST"
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        }
+        function openMenu() {
+            sidebar.classList.add("active");
+            overlay.style.display = "block";
+        }
+
+        function closeMenu() {
+            sidebar.classList.remove("active");
+            overlay.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
